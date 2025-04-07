@@ -1,6 +1,4 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
 
 trigger:
 - master
@@ -14,16 +12,16 @@ variables:
 stages:
 - stage: Build
   displayName: Build image
-  jobs:
+  jobs:  
   - job: Build
     displayName: Build
     pool:
-      vmImage: ubuntu-latest
+      vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
-      displayName: Build an image
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
+        containerRegistry: 'dockerhub1'
+        repository: 'max0423'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(tag)'
